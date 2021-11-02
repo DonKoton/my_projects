@@ -6,30 +6,33 @@ from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy import insert
 
-engine = create_engine('sqlite:///passwords.sqlite')
-connection = engine.connect()
 
-metadata = MetaData()
-passwords = Table(
-    'passwords',
-    metadata,
-    Column('service', String(64)),
-    Column('login', String(64)),
-    Column('password', String(64))
-)
+def export_to_db():
+    engine = create_engine('sqlite:///passwords.sqlite')
+    connection = engine.connect()
 
-metadata.create_all(engine)
+    metadata = MetaData()
+    passwords = Table(
+        'passwords',
+        metadata,
+        Column('service', String(64)),
+        Column('login', String(64)),
+        Column('password', String(64))
+    )
 
-fixtures = []
+    metadata.create_all(engine)
 
-with open('passes.csv') as csv_file:
-    reader = csv.reader(csv_file)
-    for item in reader:
-        fixtures.append(
-            {'service': item[0],
-             'login': item[1],
-             'password': item[2]})
+    fixtures = []
 
-stmt = insert(passwords)
-results = connection.execute(stmt, fixtures)
-print(results.rowcount)
+    with open('passes.csv') as csv_file:
+        reader = csv.reader(csv_file)
+        for item in reader:
+            fixtures.append(
+                {'service': item[0],
+                 'login': item[1],
+                 'password': item[2]})
+
+    passwords.drop(engine)
+
+    stmt = insert(passwords)
+    connection.execute(stmt, fixtures)

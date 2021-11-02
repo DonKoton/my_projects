@@ -1,5 +1,6 @@
 import csv
 import tkinter as tk
+import tkinter.messagebox as tk_mess
 
 
 class Keeper:
@@ -22,9 +23,10 @@ class Keeper:
     def addition(self):
         self.__passes = []
         self.add_data()
-        with open('passes.csv', 'a+', newline='') as file:
+        with open('passes.csv', 'w+', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(self.__passes)
+        tk_mess.showinfo("Info", "Data saved.")
 
 
 keeper = Keeper()
@@ -40,11 +42,11 @@ tk.Label(root, text="Website/App", bg='#CCCCCC').grid(row=0)
 tk.Label(root, text="E-mail address\nor login", bg='#CCCCCC').grid(row=1)
 tk.Label(root, text="Password", bg='#CCCCCC').grid(row=2)
 
-source_entry = tk.Entry(root, width=35)
+source_entry = tk.Entry(root, width=40)
 source_entry.grid(row=0, column=1, padx=10, pady=10)
-username_entry = tk.Entry(root, width=35)
+username_entry = tk.Entry(root, width=40)
 username_entry.grid(row=1, column=1, padx=10, pady=10)
-password_entry = tk.Entry(root, width=35)
+password_entry = tk.Entry(root, width=40)
 password_entry.grid(row=2, column=1, padx=10, pady=10)
 
 
@@ -55,7 +57,22 @@ save_button = tk.Button(root,
                         bg='#666666',
                         fg='White',
                         activebackground='White',
-                        activeforeground='Black').grid(row=3, column=1, sticky=tk.W, padx=5, pady=5)
+                        activeforeground='Black').grid(row=3, column=0, padx=5, pady=5)
+
+
+def on_export():
+    tk_mess.showinfo("Success!", "Data successfully exported to database!")
+
+
+export_button = tk.Button(root,
+                          text="Export to database",
+                          command=on_export,
+                          width=15,
+                          bg='#666666',
+                          fg='White',
+                          activebackground='White',
+                          activeforeground='Black'
+                          ).grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
 
 exit_button = tk.Button(root,
                         text="Exit",
@@ -64,7 +81,7 @@ exit_button = tk.Button(root,
                         bg='#666666',
                         fg='White',
                         activebackground='White',
-                        activeforeground='Black').grid(row=4, column=1, sticky=tk.W, padx=5, pady=5)
+                        activeforeground='Black').grid(row=3, column=1, padx=5, pady=5, sticky=tk.E)
 
 
 root.mainloop()
