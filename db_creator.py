@@ -32,7 +32,5 @@ def export_to_db():
                  'login': item[1],
                  'password': item[2]})
 
-    passwords.drop(engine)
-
     stmt = insert(passwords)
     connection.execute(stmt, fixtures)
