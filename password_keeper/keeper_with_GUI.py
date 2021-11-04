@@ -2,7 +2,7 @@ import os
 import csv
 import tkinter as tk
 import tkinter.messagebox as tk_mess
-import db_creator
+from password_keeper.password_keeper import db_creator
 
 
 class FileEmpty(Exception):
