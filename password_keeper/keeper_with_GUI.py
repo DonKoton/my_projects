@@ -2,7 +2,7 @@ import os
 import csv
 import tkinter as tk
 import tkinter.messagebox as tk_mess
-from password_keeper.password_keeper import db_creator
+import db_creator
 
 
 class FileEmpty(Exception):
@@ -22,7 +22,8 @@ class Keeper:
         self.root.title('Password Manager')
         self.root.config(bg='#CCCCCC')
 
-        self.frame = tk.Frame(self.root).grid(padx=10, pady=10)
+        self.frame = tk.Frame(self.root)
+        self.frame.grid(padx=10, pady=10)
 
         tk.Label(self.root, text="Website/App", bg='#CCCCCC').grid(row=0)
         tk.Label(self.root, text="E-mail address\nor login", bg='#CCCCCC').grid(row=1)
@@ -44,7 +45,8 @@ class Keeper:
                                        fg='White',
                                        activebackground='White',
                                        activeforeground='Black'
-                                       ).grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
+                                       )
+        self.export_button.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.exit_button = tk.Button(self.root,
                                      text="Exit",
@@ -53,7 +55,8 @@ class Keeper:
                                      bg='#666666',
                                      fg='White',
                                      activebackground='White',
-                                     activeforeground='Black').grid(row=3, column=1, padx=5, pady=5, sticky=tk.E)
+                                     activeforeground='Black')
+        self.exit_button.grid(row=3, column=1, padx=5, pady=5, sticky=tk.E)
 
         self.save_button = tk.Button(self.root,
                                      text="Save",
@@ -62,7 +65,8 @@ class Keeper:
                                      bg='#666666',
                                      fg='White',
                                      activebackground='White',
-                                     activeforeground='Black').grid(row=3, column=0, padx=5, pady=5)
+                                     activeforeground='Black')
+        self.save_button.grid(row=3, column=0, padx=5, pady=5)
 
         self.root.mainloop()
 
@@ -77,8 +81,9 @@ class Keeper:
         return self.__passes
 
     def clear_entries(self):
-        for entry in self.store_values():
-            entry.delete(0, 'end')
+        self.source_entry.delete(0, 'end')
+        self.username_entry.delete(0, 'end')
+        self.password_entry.delete(0, 'end')
         self.source_entry.focus()
 
     def addition(self):
