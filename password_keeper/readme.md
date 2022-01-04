@@ -6,4 +6,4 @@ I am planning further development of this project. If you like it, use it as muc
 
 
 # Instruction
-Just run keeper_with_GUI.py file
+Just run *keeper_with_GUI.py* file
